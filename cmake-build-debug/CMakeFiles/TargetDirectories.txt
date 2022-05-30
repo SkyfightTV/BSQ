@@ -1,3 +1,0 @@
-C:/Developpement/C/Projects/BSQ/cmake-build-debug/CMakeFiles/BSQ.dir
-C:/Developpement/C/Projects/BSQ/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Developpement/C/Projects/BSQ/cmake-build-debug/CMakeFiles/rebuild_cache.dir
