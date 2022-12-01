@@ -11,8 +11,8 @@
 
 Test(process, swap_buffer)
 {
-    size_t *buffer1 = malloc(2 * sizeof(size_t));
-    size_t *buffer2 = malloc(2 * sizeof(size_t));
+    int *buffer1 = malloc(2 * sizeof(int));
+    int *buffer2 = malloc(2 * sizeof(int));
 
     buffer1[0] = 1;
     buffer1[1] = 2;

@@ -15,22 +15,23 @@
 
     #define MIN(v1, v2) ((v1) <= (v2) ? (v1) : (v2))
     #define MIN3(v1, v2, v3) MIN(MIN(v1, v2), v3)
+    #define CMP(c, c1) ((~c & c1)) // 0 == equal and 1 == not equal
 
 typedef struct map_s {
     char *fc;
     char *data;
-    size_t lines;
-    size_t line_size;
+    int lines;
+    int line_size;
 } bsq_map;
 
 typedef struct square_s {
     char *location;
-    size_t size;
+    int size;
 } bsq_square;
 
-void swap_buffer(size_t **buffer1, size_t **buffer2);
+void swap_buffer(int **buffer1, int **buffer2);
 void print_map(bsq_map *map, bsq_square *square);
-void solve_fill_buffer(bsq_map *map, bsq_square *square, size_t line,
-size_t *buffer[2]);
-void solve(bsq_map *map, bsq_square *square);
+int solve_fill_buffer(bsq_map *map, bsq_square *square, int line,
+int *buffer[2]);
+int solve(bsq_map *map, bsq_square *square);
 #endif

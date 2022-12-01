@@ -7,18 +7,17 @@
 
 #include "includes/bsq.h"
 
-char *get_number(char * const str, size_t *number)
+char *get_number(char *str, int *number)
 {
-    char *current;
-
     if (!str || !number)
         return "\0";
-    current = str;
     *number = 0;
-    for (; *current && *current != '\n' && *current >= '0' &&
-    *current <= '9'; current++)
-        *number = *number * 10 + *current - '0';
-    return current;
+    for (; *str && *str != '\n' && *str >= '0' &&
+    *str <= '9'; ++str)
+        *number = *number * 10 + *str - '0';
+    if (*str != '\n' && *str <= '0' && *str >= '9')
+        return NULL;
+    return str;
 }
 
 char *read_file_content(const char *file_path)
@@ -26,13 +25,12 @@ char *read_file_content(const char *file_path)
     struct stat f_stats = {0};
     int fd;
     char *result;
-    size_t read_size;
+    int read_size;
 
     if (!file_path || stat(file_path, &f_stats) == -1)
         return 0;
     fd = open(file_path, O_RDONLY);
     result = malloc((f_stats.st_size + 1) * sizeof(char));
-    result[f_stats.st_size] = '\0';
     read_size = read(fd, result, f_stats.st_size);
     close(fd);
     if (read_size != f_stats.st_size) {
@@ -42,13 +40,13 @@ char *read_file_content(const char *file_path)
     return result;
 }
 
-size_t get_line_size(char const *data)
+int get_line_size(char const *data)
 {
-    size_t result;
+    int result;
 
     if (!data)
         return -1;
-    for (result = 0; *data && *data != '\n'; data++, ++result);
+    for (result = 0; *data && *data != '\n'; ++data, ++result);
     return result;
 }
 

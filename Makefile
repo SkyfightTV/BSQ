@@ -11,29 +11,34 @@ OUT = bsq
 OUT_T = unit_tests
 COVERAGE_DIR = coverage
 
+COMP = cc
+COMP_FLAGS = -O3 -I./includes -g
+
 SRC = bsq.c \
 	process.c \
 	read.c
-TESTS = $(wildcard tests/*.c)
+TESTS = tests/tests_bsq.c \
+	tests/tests_process.c \
+	tests/tests_read.c
 OBJ = $(SRC:.c=.o)
 
 all: $(OUT)
 
 %.o : %.c
-	gcc -o $@ -c $< -I./includes -g
+	$(COMP) $(COMP_FLAGS) -o $@ -c $<
 
 $(OUT): $(OBJ)
-	gcc -o $(OUT) $(OBJ) -I./includes -g
-	make clean
+	$(COMP) $(COMP_FLAGS) -o $(OUT) $(OBJ)
 
 unit_tests: fclean $(OUT)
-	./tests/tests_maps.sh bsq
-	gcc -o $(OUT_T) $(TESTS) $(SRC:bsq.c=) --coverage -lcriterion
+	$(COMP) $(COMP_FLAGS) -o $(OUT_T) $(TESTS) \
+	$(SRC:bsq.c=) --coverage -lcriterion
 
-run_tests: unit_tests
+tests_run: unit_tests
+	./tests/tests_maps.sh bsq
 	./$(OUT_T)
 
-coverage: run_tests
+coverage: tests_run
 	rm -rf $(COVERAGE_DIR)
 	gcovr --branches --exclude tests
 	mkdir $(COVERAGE_DIR)

@@ -11,7 +11,7 @@
 Test(read, get_number)
 {
     char *str = "123456789\no";
-    size_t number = 0;
+    int number = 0;
 
     cr_assert_str_eq(get_number(str, &number), "\no");
     cr_assert_eq(number, 123456789);
